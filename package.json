@@ -3,13 +3,11 @@
     "discord.js": "12.5.3"
   },
   "dependencies": {
-    "canvas": "^2.8.0",
-    "discord-image-generation": "^1.4.9",
     "enmap": "^5.8.5",
     "fs": "^0.0.1-security",
     "got": "^9.6.0",
-    "node-fetch": "^2.6.1",
-    "nodemon": "^2.0.7"
+    "nodemon": "^2.0.7",
+    "pm2": "^4.5.6"
   },
   "engines": {
     "node": ">=14.16.0"
