@@ -12,7 +12,7 @@ module.exports = {
               .find("name", client.settings.get(member.guild.id, "modLogChannel"))
               .send("Banned " + victim.tag)
               .catch(console.error);
-        }
+        
     } else {
         message.reply("You do not have permissions to ban " + victim.tag);
     }
