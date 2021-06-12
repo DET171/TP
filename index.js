@@ -44,10 +44,13 @@ client.settings = new Enmap({
 });
 
 const defaultConfig = {
-  prefix: "sus ",
-  modLogChannel: "mod-log",
-  modRole: "Moderator",
+	ownerRole: "Not Set",
+	coownerRole: "Not Set",
+	adminRole: "Administrator",
+	modRole: "Moderator",
   adminRole: "Administrator",
+	prefix: "sus ",
+  modLogChannel: "mod-log",
   welcomeChannel: "welcome",
   welcomeMessage: "Say hello to {{user}}, everyone! We all need a warm welcome sometimes :D"
 }
@@ -94,20 +97,24 @@ client.on("guildMemberAdd", member => {
 client.on("message", async (message) => {
   // Exit and stop if it's not there
 
+	console.log(`\nCHATLOGS - [${message.guild}] ${message.author.tag}: ${message.content}`);
+
+
+
 	const guildConf = client.settings.ensure(message.guild.id, defaultConfig);
-	console.log("Prefix for " + message.guild.id + ": " + guildConf.prefix);
+
 
 
 	let prefix = guildConf.prefix;
 
 
 
+
+
   if (!message.guild || !message.content.startsWith(prefix) || message.author.bot) return;
   const args = message.content.slice(prefix.length).trim().split(/ +/);
   const command = args.shift().toLowerCase();
-
-
-
+	
 
 
 if(command === "setconf") {
@@ -149,7 +156,9 @@ if(command === "setconf") {
 	if (!client.commands.has(command)) return;
 	try {
 		client.commands.get(command).execute(message, args);
-		} catch (error) {
+
+    }
+		 catch (error) {
 		console.error(error);
 		message.reply('there was an error trying to execute that command!');
 	}
