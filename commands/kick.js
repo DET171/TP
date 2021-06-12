@@ -12,7 +12,9 @@ module.exports = {
               .find("name", client.settings.get(member.guild.id, "modLogChannel"))
               .send("Kicked " + victim.tag)
               .catch(console.error);
-        } 
+        } catch {
+            message.reply(". ");
+        }
     } else {
         message.reply("You do not have permissions to kick " + victim.tag);
     }
