@@ -6,18 +6,16 @@ const client = new Discord.Client();
 const https = require('https');
 const Enmap = require('enmap');
 const got = require('got');
+const DIG = require('discord-image-generation');
 client.commands = new Discord.Collection();
+
+
+
+
+
+
 console.log("Loading command files...")
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
-
-
-
-
-
-
-
-
-
 for (const file of commandFiles) {
 	const command = require(`./commands/${file}`);
 	client.commands.set(command.name, command);
@@ -57,6 +55,7 @@ const defaultConfig = {
 
 client.on("ready", () => {
   console.log("Logged in as " + client.user.tag);
+	console.log(`Serving in ${client.channels.size} channels on ${client.guilds.size} servers, for a total of ${client.users.size} users.`);
 });
 
 
@@ -78,7 +77,7 @@ client.on("guildMemberAdd", member => {
   welcomeMessage = welcomeMessage.replace("{{user}}", member.user.tag)
 
   // we'll send to the welcome channel.
-  member.guild.channels
+  member.guild.channels.cache
     .find("name", client.settings.get(member.guild.id, "welcomeChannel"))
     .send(welcomeMessage)
     .catch(console.error);
@@ -94,7 +93,7 @@ client.on("guildMemberAdd", member => {
 
 
 
-client.on("message", async (message) => {
+client.on("message", async message => {
   // Exit and stop if it's not there
 
 	console.log(`\nCHATLOGS - [${message.guild}] ${message.author.tag}: ${message.content}`);
@@ -114,6 +113,12 @@ client.on("message", async (message) => {
   if (!message.guild || !message.content.startsWith(prefix) || message.author.bot) return;
   const args = message.content.slice(prefix.length).trim().split(/ +/);
   const command = args.shift().toLowerCase();
+
+
+
+
+
+
 
 
 
@@ -144,7 +149,7 @@ if(command === "setconf") {
     });
     message.channel.send(`The following are the server's current configuration:
     \`\`\`${configProps}\`\`\``);
-  }          
+  }
 
 
 
@@ -156,7 +161,6 @@ if(command === "setconf") {
 	if (!client.commands.has(command)) return;
 	try {
 		client.commands.get(command).execute(message, args);
-
     }
 		 catch (error) {
 		console.error(error);

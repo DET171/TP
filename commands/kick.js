@@ -5,12 +5,13 @@ module.exports = {
     if (message.member.hasPermission("KICK_MEMBERS")) {
     if (message.mentions.members.first()) {
         try {
+						let reason = args.slice(1).join(" ");
             var victim = message.mentions.members.first();
-            victim.kick();
-            message.channel.send("Succesfully kicked " + victim)
-            member.guild.channels
+            victim.kick(reason);
+            message.channel.send("Succesfully kicked " + victim + "\n Reason: " + reason)
+            member.guild.channels.cache
               .find("name", client.settings.get(member.guild.id, "modLogChannel"))
-              .send("Kicked " + victim.tag)
+              .send("Kicked " + victim.tag + "\n Reason: " + reason)
               .catch(console.error);
         } catch {
             message.reply(". ");
