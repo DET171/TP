@@ -19,5 +19,19 @@
   "scripts": {
     "start": "node index.js",
     "watch": "nodemon index.js"
-  }
+  },
+  "name": "discord-bot-tp",
+  "version": "2.5.8",
+  "description": "Discord bot made with D.js",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DET171/TP.git"
+  },
+  "author": "AdmiralCanaris",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/DET171/TP/issues"
+  },
+  "homepage": "https://github.com/DET171/TP#readme"
 }
