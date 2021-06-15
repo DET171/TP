@@ -5,6 +5,8 @@ module.exports = {
 	name: 'reddit',
 	description: 'Ping!',
 	cooldown: 5,
+	args: false,
+	aliases: ['rd'],
 	execute(message, args) {
     let link = 'https://www.reddit.com/r/' + args[0] + '/random/.json';
     const embed = new Discord.MessageEmbed();
