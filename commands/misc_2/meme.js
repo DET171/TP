@@ -1,11 +1,13 @@
 const Discord = require("discord.js");
 const client = new Discord.Client();
-const https = require('https'); 
+const https = require('https');
 
 const got = require('got');
 module.exports = {
 	name: 'meme',
 	description: 'memey!',
+	args: false,
+	cooldown: 5,
 	execute(message, args) {
 		const embed = new Discord.MessageEmbed();
 	got('https://www.reddit.com/r/memes/random/.json')

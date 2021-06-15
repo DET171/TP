@@ -1,6 +1,7 @@
 module.exports = {
 	name: 'als',
 	description: 'als!',
+	args: false,
 	execute(message, args) {
 		let age = args[0]; // Remember arrays are 0-based!.
   		let sex = args[1];

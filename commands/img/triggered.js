@@ -3,6 +3,7 @@ const DIG = require('discord-image-generation');
 module.exports = {
 	name: 'triggered',
 	description: 'Ping!',
+	args: false,
 	async execute(message, args) {
     let avatar = message.author.displayAvatarURL({ dynamic: false, format: 'png' });
       // Make the image

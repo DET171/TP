@@ -5,6 +5,9 @@ const got = require('got');
 module.exports = {
 	name: 'pf',
 	description: 'pf!',
+	args: true,
+	cooldown: 3,
+	usage: '<reddit/links/youtubers>` \n e.g. `sus pf reddit` or `sus pf links',
 	execute(message, args) {
 	var x = args[0];
 		if (x === 'reddit') {

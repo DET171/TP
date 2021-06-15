@@ -8,18 +8,21 @@ const Enmap = require('enmap');
 const got = require('got');
 const DIG = require('discord-image-generation');
 client.commands = new Discord.Collection();
-
-
+client.cooldowns = new Discord.Collection();
 
 
 
 
 console.log("Loading command files...")
-const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
-for (const file of commandFiles) {
-	const command = require(`./commands/${file}`);
-	client.commands.set(command.name, command);
-	console.log(command.name);
+const commandFolders = fs.readdirSync('./commands');
+
+for (const folder of commandFolders) {
+	const commandFiles = fs.readdirSync(`./commands/${folder}`).filter(file => file.endsWith('.js'));
+	for (const file of commandFiles) {
+		const command = require(`./commands/${folder}/${file}`);
+		client.commands.set(command.name, command);
+		console.log(command.name);
+	}
 }
 
 
@@ -35,53 +38,30 @@ for (const file of commandFiles) {
 // to avoid our values to be "reference" to the default settings.
 // The explanation for why is complex - just go with it.
 client.settings = new Enmap({
-  name: "config",
+  name: "conf",
   fetchAll: false,
   autoFetch: true,
   cloneLevel: 'deep'
 });
 
-const defaultConfig = {
+const defaultConf = {
 	ownerRole: "Not Set",
 	coownerRole: "Not Set",
 	adminRole: "Administrator",
 	modRole: "Moderator",
   adminRole: "Administrator",
 	prefix: "sus ",
-  modLogChannel: "mod-log",
-  welcomeChannel: "welcome",
-  welcomeMessage: "Say hello to {{user}}, everyone! We all need a warm welcome sometimes :D"
 }
 
 client.on("ready", () => {
   console.log("Logged in as " + client.user.tag);
-	console.log(`Serving in ${client.channels.size} channels on ${client.guilds.size} servers, for a total of ${client.users.size} users.`);
 });
 
 
 client.on("guildDelete", guild => {
-  // Removing an element uses `delete(key)`
   client.settings.delete(guild.id);
 });
 
-client.on("guildMemberAdd", member => {
-  // This executes when a member joins, so let's welcome them!
-
-  // First, ensure the settings exist
-  client.settings.ensure(member.guild.id, defaultConfig);
-
-  // First, get the welcome message using get:
-  let welcomeMessage = client.settings.get(member.guild.id, "welcomeMessage");
-
-  // Our welcome message has a bit of a placeholder, let's fix that:
-  welcomeMessage = welcomeMessage.replace("{{user}}", member.user.tag)
-
-  // we'll send to the welcome channel.
-  member.guild.channels.cache
-    .find("name", client.settings.get(member.guild.id, "welcomeChannel"))
-    .send(welcomeMessage)
-    .catch(console.error);
-});
 
 
 
@@ -98,21 +78,13 @@ client.on("message", async message => {
 
 	console.log(`\nCHATLOGS - [${message.guild}] ${message.author.tag}: ${message.content}`);
 
-
-
-	const guildConf = client.settings.ensure(message.guild.id, defaultConfig);
-
-
-
+	if (!message.guild) return;
+	const guildConf = client.settings.ensure(message.guild.id, defaultConf);
 	let prefix = guildConf.prefix;
 
-
-
-
-
-  if (!message.guild || !message.content.startsWith(prefix) || message.author.bot) return;
+  if (!message.content.startsWith(prefix) || message.author.bot) return;
   const args = message.content.slice(prefix.length).trim().split(/ +/);
-  const command = args.shift().toLowerCase();
+  const commandName = args.shift().toLowerCase();
 
 
 
@@ -122,11 +94,9 @@ client.on("message", async message => {
 
 
 
-if(command === "setconf") {
-	message.channel.send("Tip: When setting roles, enter the ***role name spelled exact. *** \n ***DO NOT PING THE ROLE OR ENTER THE ROLE ID*** \n PS Caps matter. If you get anything wrong, you will have to create an extra role. :D");
-	const adminRole = message.guild.roles.cache.find(r => r.name === guildConf.adminRole);
-	if(!adminRole) return message.reply("Administrator Role Not Found");
-	if(!message.member.roles.cache.has(adminRole.id)) {
+if(commandName === "setconf") {
+
+	if(!message.member.hasPermission('MANAGE_SERVER')) {
 		return message.reply("You're not an admin, sorry!");
 	}
 	const [prop, ...value] = args;
@@ -143,7 +113,7 @@ if(command === "setconf") {
 
 
   // Now let's make another command that shows the configuration items.
-  if(command === "showconf") {
+  if(commandName === "showconf") {
     let configProps = Object.keys(guildConf).map(prop => {
       return `${prop}  :  ${guildConf[prop]}\n`;
     });
@@ -158,13 +128,54 @@ if(command === "setconf") {
 
 
 
-	if (!client.commands.has(command)) return;
+
+	const command = client.commands.get(commandName) || client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName));
+
+
+	if (command.args && !args.length) {
+		let reply = `You didn't provide any arguments, ${message.author}!`;
+		if (command.usage) {
+			reply += '\nThe proper usage would be: `' + prefix + command.name + command.usage + '`';
+		}
+	return message.channel.send(reply);
+	}
+
+
+
+
+
+	const { cooldowns } = client;
+
+	if (!cooldowns.has(command.name)) {
+		cooldowns.set(command.name, new Discord.Collection());
+	}
+
+	const now = Date.now();
+	const timestamps = cooldowns.get(command.name);
+	const cooldownAmount = (command.cooldown || 3) * 1000;
+
+	if (timestamps.has(message.author.id)) {
+		const expirationTime = timestamps.get(message.author.id) + cooldownAmount;
+
+		if (now < expirationTime) {
+			const timeLeft = (expirationTime - now) / 1000;
+			return message.reply(`please wait ${timeLeft.toFixed(1)} more second(s) before reusing the \`${command.name}\` command.`);
+		}
+	}
+	timestamps.set(message.author.id, now);
+	setTimeout(() => timestamps.delete(message.author.id), cooldownAmount);
+
+
+
+
+	if (!command) return;
 	try {
-		client.commands.get(command).execute(message, args);
+		command.execute(message, args, prefix);
     }
 		 catch (error) {
 		console.error(error);
 		message.reply('there was an error trying to execute that command!');
+		message.channel.send('```' + error + '```');
 	}
 
 });
