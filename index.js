@@ -141,7 +141,10 @@ if(commandName === "setconf") {
 	}
 
 
-
+const cdmsg = [
+	"Take a breather",
+	"Hey slow it down there",
+]
 
 
 	const { cooldowns } = client;
@@ -158,8 +161,10 @@ if(commandName === "setconf") {
 		const expirationTime = timestamps.get(message.author.id) + cooldownAmount;
 
 		if (now < expirationTime) {
+			const cdembed = new Discord.MessageEmbed().setTimestamp().setColor('DARK_BLUE');
 			const timeLeft = (expirationTime - now) / 1000;
-			return message.reply(`please wait ${timeLeft.toFixed(1)} more second(s) before reusing the \`${command.name}\` command.`);
+			cdembed.setTitle(cdmsg[1]).setDescription(`The default cooldown for this command is \`${cooldownAmount} ms\` \n  Please wait ${timeLeft.toFixed(1)} more second(s) before reusing the \`${command.name}\` command.`);
+			return message.channel.send(cdembed);
 		}
 	}
 	timestamps.set(message.author.id, now);

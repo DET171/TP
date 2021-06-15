@@ -16,6 +16,6 @@
   },
   "scripts": {
     "start": "node index.js",
-    "start-w": "nodemon index.js"
+    "watch": "nodemon index.js"
   }
 }
