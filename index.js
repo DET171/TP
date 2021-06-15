@@ -1,4 +1,4 @@
-
+require('events').EventEmitter.defaultMaxListeners = 15;
 const fs = require('fs');
 const Discord = require("discord.js");
 const config = require('./config.json');
@@ -7,6 +7,29 @@ const https = require('https');
 const Enmap = require('enmap');
 const got = require('got');
 const DIG = require('discord-image-generation');
+const { GiveawaysManager } = require('discord-giveaways');
+const ms = require('ms');
+
+const manager = new GiveawaysManager(client, {
+    storage: './giveaways.json',
+    updateCountdownEvery: 10000,
+    hasGuildMembersIntent: false,
+    default: {
+        botsCanWin: false,
+        exemptPermissions: ['MANAGE_MESSAGES', 'ADMINISTRATOR'],
+        embedColor: '#FF0000',
+        embedColorEnd: '#000000',
+        reaction: '🎉'
+    }
+});
+
+client.giveawaysManager = manager;
+
+
+
+
+
+
 client.commands = new Discord.Collection();
 client.cooldowns = new Discord.Collection();
 
@@ -97,7 +120,7 @@ client.on("message", async message => {
 if(commandName === "setconf") {
 
 	if(!message.member.hasPermission('MANAGE_SERVER')) {
-		return message.reply("You're not an admin, sorry!");
+		return message.reply("You do not have `Manage Server` permissions, sorry!");
 	}
 	const [prop, ...value] = args;
 	if(!client.settings.has(message.guild.id, prop)) {
@@ -171,7 +194,7 @@ if(commandName === "setconf") {
 
 	if (!command) return;
 	try {
-		command.execute(message, args, prefix);
+		command.execute(message, args, prefix, client);
     }
 		 catch (error) {
 		console.error(error);
