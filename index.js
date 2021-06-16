@@ -78,6 +78,14 @@ const defaultConf = {
 
 client.on("ready", () => {
   console.log("Logged in as " + client.user.tag);
+  const express = require('express');
+  const app = express();
+  const Pport = 8000;
+
+  app.get('/', (req, res) => res.send(`Serving as ${client.user.tag} <br> You can invite me at <a href="https://discord.com/api/oauth2/authorize?client_id=853206803219480606&permissions=2048&scope=bot">https://discord.com/api/oauth2/authorize?client_id=853206803219480606&permissions=2048&scope=bot<a><br>You can invite my brother at <a href="https://discord.com/oauth2/authorize?client_id=848166639367094302&permissions=4294967287&scope=bot%20applications.commands">https://discord.com/oauth2/authorize?client_id=848166639367094302&permissions=4294967287&scope=bot%20applications.commands</a>`));
+
+  app.listen(Pport, () => console.log(`Example app listening at http://localhost:${Pport}`));
+
 });
 
 
