@@ -1,7 +1,7 @@
 require('events').EventEmitter.defaultMaxListeners = 15;
 const fs = require('fs');
 const Discord = require("discord.js");
-const config = require('./config.json');
+require('dotenv').config();
 const client = new Discord.Client();
 const https = require('https');
 const Enmap = require('enmap');
@@ -207,4 +207,4 @@ if(commandName === "setconf") {
 
 
 
-client.login(config.token);
+client.login();
