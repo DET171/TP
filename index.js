@@ -113,6 +113,15 @@ client.on("message", async message => {
 	const guildConf = client.settings.ensure(message.guild.id, defaultConf);
 	let prefix = guildConf.prefix;
 
+  if (message.content.startsWith("set")) {
+    let configProps = Object.keys(guildConf).map(prop => {
+      return `${prop}  :  ${guildConf[prop]}\n`;
+    });
+    message.channel.send(`The following are the server's current configuration:
+    \`\`\`${configProps}\`\`\``);
+  }
+
+
   if (!message.content.startsWith(prefix) || message.author.bot) return;
   const args = message.content.slice(prefix.length).trim().split(/ +/);
   const commandName = args.shift().toLowerCase();

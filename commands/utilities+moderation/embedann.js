@@ -13,12 +13,11 @@ module.exports = {
     if(args[0] === ''){var ping = '';} else{var ping = "<@&" + args[0] + ">";}
     const client = new Discord.Client();
     const channelid = args[1];
-    const head = ping;
 		const embed = new Discord.MessageEmbed;
 
 		embed.setTitle(sargs[0]).setDescription(sargs[1]).setFooter(sargs[2]);
     const channell = message.member.guild.channels.cache.get(channelid);
-    channell.send(embed);
+    channell.send(ping, embed);
     message.delete;
 	},
 };
