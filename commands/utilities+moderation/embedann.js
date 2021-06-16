@@ -16,7 +16,7 @@ module.exports = {
     const head = ping;
 		const embed = new Discord.MessageEmbed;
 
-		embed.setTitle(sargs[0]).setDescription(sargs[1]).setThumbnail(sargs[2]);
+		embed.setTitle(sargs[0]).setDescription(sargs[1]).setFooter(sargs[2]);
     const channell = message.member.guild.channels.cache.get(channelid);
     channell.send(embed);
     message.delete;
