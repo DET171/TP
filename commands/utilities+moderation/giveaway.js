@@ -8,7 +8,7 @@ module.exports = {
   usage: '<start/find/end/delete> <time> <winners> <prize>',
   aliases: ['giveaway', 'giveaways', 'gaw'],
 	async execute(message, args, prefix, client) {
-
+	if(!message.member.hasPermission('MANAGE_CHANNELS'))return message.channel.send('Uh oh! You can\'t use this command!')
 
 
   const f = args[0];
