@@ -95,7 +95,12 @@ client.on("guildDelete", guild => {
 });
 
 
-
+client.on('messageDelete', (message) => {
+	db.set(`snipe_${message.channel.id}`, {
+		content: message.content,
+		author: message.author
+	})
+})
 
 
 
@@ -146,8 +151,8 @@ client.on("message", async message => {
     let configProps = Object.keys(guildConf).map(prop => {
       return `${prop}  :  ${guildConf[prop]}\n`;
     });
-    message.channel.send(`The following are the server's current configuration:
-    \`\`\`${configProps}\`\`\``);
+    message.channel.send(`The following are the server's current configuration: \n
+    ${configProps}`);
   }
 
 

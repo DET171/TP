@@ -16,7 +16,7 @@ module.exports = {
     client.giveawaysManager.start(message.channel, {
   	    time: ms(args[1]),
   	    winnerCount: parseInt(args[2]),
-  	    prize: args.slice(3).join(' '),
+  	    prize: args.slice(4).join(' '),
   	    messages: {
   	        giveaway: '\n🎉🎉 **GIVEAWAY TIME** 🎉🎉',
   	        giveawayEnded: '\n🎉🎉 **GIVEAWAY ENDED** 🎉🎉',
@@ -52,9 +52,9 @@ module.exports = {
     if(f === 'edit'){
       const messageID = args[1];
         client.giveawaysManager.edit(messageID, {
-            addTime: 5000,
-            newWinnerCount: 3,
-            newPrize: 'New Prize!'
+            addTime: args[1],
+            newWinnerCount: args[2],
+            newPrize: args.slice(3).join(' ')
         }).then(() => {
             // Here, we can calculate the time after which we are sure that the lib will update the giveaway
             const numberOfSecondsMax = client.giveawaysManager.options.updateCountdownEvery / 1000;

@@ -21,10 +21,11 @@
     "start": "node index.js",
     "start--pm2": "pm2 start index.js",
     "stop--pm2": "pm2 stop index.js",
-    "restart--pm2": "pm2 restart index.js"
+    "restart--pm2": "pm2 restart index.js",
+    "link--pm2": "pm2 link zthgdlwdqtqzpsm qancg12cmv2n052"
   },
   "name": "discord-bot-tp",
-  "version": "2.6.1",
+  "version": "3.2.6",
   "description": "Discord bot made with D.js",
   "main": "index.js",
   "repository": {
