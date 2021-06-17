@@ -210,7 +210,7 @@ if(commandName === "setconf") {
 	}
 
 
-
+  const me = client.user.tag;
 
 	const { cooldowns } = client;
 
@@ -240,7 +240,7 @@ if(commandName === "setconf") {
 
 
 	try {
-		command.execute(message, args, prefix, client);
+		command.execute(message, args, prefix, me);
     }
 		 catch (error) {
 		console.error(error);
