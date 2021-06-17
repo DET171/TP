@@ -9,7 +9,8 @@ const got = require('got');
 const DIG = require('discord-image-generation');
 const { GiveawaysManager } = require('discord-giveaways');
 const ms = require('ms');
-
+const afk = require("afk-cord")
+const afkcord = new afk("wio.db")
 const manager = new GiveawaysManager(client, {
     storage: './giveaways.json',
     updateCountdownEvery: 10000,
@@ -130,7 +131,12 @@ client.on("message", async message => {
 
 
 
-
+  if(commandName === 'afk'){
+    let reason = args.slice(0).join(" ");
+    afkcord.options({notafkmsg:"I have removed your AFK!",afkmsg:"I have set your AFK!"}) // notafkmsg = The Message The Bot Will Send When The User Is Not AFK Anymore!,afkmsg = The Message That Bot Will Send When AFK Command Is Used!
+    afkcord.afk(client,msg.author.id,reason,message.channel.id)
+    message.reply("I have set your AFK!")
+  }
 
 
 

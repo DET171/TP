@@ -4,7 +4,7 @@
     "discord.js": "12.5.3"
   },
   "dependencies": {
-    "canvas": "^2.8.0",
+    "afk-cord": "^1.0.2",
     "discord-image-generation": "^1.4.9",
     "dotenv": "^10.0.0",
     "enmap": "5.8.5",
@@ -15,14 +15,13 @@
     "pm2": "^5.1.0"
   },
   "engines": {
-    "node": ">=14.16.0"
+    "node": ">=16.3.0"
   },
   "scripts": {
     "start": "node index.js",
     "start--pm2": "pm2 start index.js",
     "stop--pm2": "pm2 stop index.js",
-    "restart--pm2": "pm2 restart index.js",
-    "watch": "nodemon index.js"
+    "restart--pm2": "pm2 restart index.js"
   },
   "name": "discord-bot-tp",
   "version": "2.6.1",
