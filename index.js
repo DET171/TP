@@ -9,8 +9,8 @@ const got = require('got');
 const DIG = require('discord-image-generation');
 const { GiveawaysManager } = require('discord-giveaways');
 const ms = require('ms');
-const afk = require("afk-cord")
-const afkcord = new afk("wio.db")
+const db = require('quick.db');
+
 const manager = new GiveawaysManager(client, {
     storage: './giveaways.json',
     updateCountdownEvery: 10000,
@@ -114,6 +114,34 @@ client.on("message", async message => {
 	const guildConf = client.settings.ensure(message.guild.id, defaultConf);
 	let prefix = guildConf.prefix;
 
+
+  if (db.has(message.author.id + '.afk')) {
+    message.channel.send(`Welcome back ${message.author} I removed your AFK.`);
+    db.delete(message.author.id + '.afk');
+    db.delete(message.author.id + '.messageafk');
+  }
+
+
+
+  message.mentions.users.forEach((user) => {
+    if (message.author.bot) return false;
+
+    if (
+     message.content.includes('@here') ||
+     message.content.includes('@everyone')
+    )
+     return false;
+    if (db.has(user.id + '.afk'))
+     message.channel.send(
+      `${message.author}, the user you mentioned is currently AFK.. Leave a message if urgent by DMing him`
+     );
+   });
+
+
+
+
+
+
   if (message.content.startsWith("set")) {
     let configProps = Object.keys(guildConf).map(prop => {
       return `${prop}  :  ${guildConf[prop]}\n`;
@@ -127,16 +155,6 @@ client.on("message", async message => {
   const args = message.content.slice(prefix.length).trim().split(/ +/);
   const commandName = args.shift().toLowerCase();
 
-
-
-
-
-  if(commandName === 'afk'){
-    let reason = args.slice(0).join(" ");
-    afkcord.options({notafkmsg:"I have removed your AFK!",afkmsg:"I have set your AFK!"}) // notafkmsg = The Message The Bot Will Send When The User Is Not AFK Anymore!,afkmsg = The Message That Bot Will Send When AFK Command Is Used!
-    afkcord.afk(client,msg.author.id,reason,message.channel.id)
-    message.reply("I have set your AFK!")
-  }
 
 
 
