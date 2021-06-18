@@ -16,7 +16,6 @@ const db = require('quick.db');
 
 
 
-
 client.commands = new Discord.Collection();
 client.cooldowns = new Discord.Collection();
 
@@ -183,7 +182,33 @@ if(commandName === "setconf") {
   }
 
 
+	if(commandName === 'bj' || commandName === 'blackjack'){
+		const blackjack = require('discord-bj')
 
+		let game = blackjack(message, client)
+       switch (game.result) {
+         case 'Win':
+           // do win stuff here
+           break;
+         case 'Tie':
+           // do tie stuff here
+           break;
+         case 'Lose':
+           // do lose stuff here
+           break;
+         case 'Double Win':
+				 message.channel.send(`${message.author}, congratulations!`)
+           break;
+         case 'Double Lose':
+				 message.channel.send(`${message.author}, you are such a disgrace!`)
+           break;
+         case 'ERROR':
+           const err = message.channel.send(`${message.author}, there was an error!`)
+					 err.react('🐞')
+           break;
+
+       }
+	}
 
 
 
