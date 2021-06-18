@@ -7,24 +7,10 @@ const https = require('https');
 const Enmap = require('enmap');
 const got = require('got');
 const DIG = require('discord-image-generation');
-const { GiveawaysManager } = require('discord-giveaways');
 const ms = require('ms');
 const db = require('quick.db');
 
-const manager = new GiveawaysManager(client, {
-    storage: './giveaways.json',
-    updateCountdownEvery: 10000,
-    hasGuildMembersIntent: false,
-    default: {
-        botsCanWin: false,
-        exemptPermissions: ['MANAGE_MESSAGES', 'ADMINISTRATOR'],
-        embedColor: '#FF0000',
-        embedColorEnd: '#000000',
-        reaction: '🎉'
-    }
-});
 
-client.giveawaysManager = manager;
 
 
 
@@ -77,9 +63,15 @@ const defaultConf = {
 	prefix: "sus ",
 }
 
-client.on("ready", () => {
+client.on("ready", async () => {
   console.log("Logged in as " + client.user.tag);
   const express = require('express');
+  const channel = await client.channels.fetch('855271120567926814');
+	channel.send('Started up.')
+  setInterval (function () {
+    channel.send("I'm up!")
+    .catch(console.error);
+  }, 270000);
   const app = express();
   const Pport = 8000;
 
