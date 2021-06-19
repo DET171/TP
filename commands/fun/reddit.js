@@ -1,5 +1,5 @@
-const Discord = require("discord.js");
-const got = require("got");
+const Discord = require('discord.js');
+const got = require('got');
 
 module.exports = {
 	name: 'reddit',
@@ -8,9 +8,9 @@ module.exports = {
 	args: false,
 	aliases: ['rd'],
 	execute(message, args) {
-    let link = 'https://www.reddit.com/r/' + args[0] + '/random/.json';
-    const embed = new Discord.MessageEmbed();
-			got(link)
+		const link = 'https://www.reddit.com/r/' + args[0] + '/random/.json';
+		const embed = new Discord.MessageEmbed();
+		got(link)
 			.then(response => {
 				const [list] = JSON.parse(response.body);
 				const [post] = list.data.children;

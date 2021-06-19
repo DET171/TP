@@ -3,8 +3,9 @@ const fs = require('fs');
 const Discord = require('discord.js');
 require('dotenv').config();
 const client = new Discord.Client();
+const Enmap = require('enmap');
 const db = require('quick.db');
-const prefix = "sus ";
+
 
 client.commands = new Discord.Collection();
 client.cooldowns = new Discord.Collection();
@@ -23,7 +24,20 @@ for (const folder of commandFolders) {
 }
 
 
+client.settings = new Enmap({
+	name: 'conf',
+	fetchAll: false,
+	autoFetch: true,
+	cloneLevel: 'deep',
+});
 
+const defaultConf = {
+	ownerRole: 'Not Set',
+	coownerRole: 'Not Set',
+	adminRole: 'Administrator',
+	modRole: 'Moderator',
+	prefix: 'sus ',
+};
 
 client.on('ready', async () => {
 	console.log('Logged in as ' + client.user.tag);
@@ -62,7 +76,9 @@ client.on('message', async message => {
 
 	console.log(`\nCHATLOGS - [${message.guild}] ${message.author.tag}: ${message.content}`);
 
-
+	if (!message.guild) return;
+	const guildConf = client.settings.ensure(message.guild.id, defaultConf);
+	const prefix = guildConf.prefix;
 
 
 	if (db.has(message.author.id + '.afk')) {
@@ -87,7 +103,13 @@ client.on('message', async message => {
 	});
 
 
-
+	if (message.content.startsWith('set')) {
+		const configProps = Object.keys(guildConf).map(prop => {
+			return `${prop}  :  ${guildConf[prop]}\n`;
+		});
+		message.channel.send(`The following are the server's current configuration: \n
+    ${configProps}`);
+	}
 
 
 	if (!message.content.startsWith(prefix) || message.author.bot) return;
@@ -95,7 +117,29 @@ client.on('message', async message => {
 	const commandName = args.shift().toLowerCase();
 
 
+	if(commandName === 'setconf') {
 
+		if(!message.member.hasPermission('MANAGE_SERVER')) {
+			return message.reply('You do not have `Manage Server` permissions, sorry!');
+		}
+		const [prop, ...value] = args;
+		if(!client.settings.has(message.guild.id, prop)) {
+			return message.reply('This key is not in the configuration.');
+		}
+		client.settings.set(message.guild.id, value.join(' '), prop);
+		message.channel.send(`Guild configuration item ${prop} has been changed to:\n\`${value.join(' ')}\``);
+
+	}
+
+
+	// Now let's make another command that shows the configuration items.
+	if(commandName === 'showconf') {
+		const configProps = Object.keys(guildConf).map(prop => {
+			return `${prop}  :  ${guildConf[prop]}\n`;
+		});
+		message.channel.send(`The following are the server's current configuration:
+    \`\`\`${configProps}\`\`\``);
+	}
 
 
 	if(commandName === 'bj' || commandName === 'blackjack') {
@@ -113,14 +157,13 @@ client.on('message', async message => {
 			// do lose stuff here
 			break;
 		case 'Double Win':
-				 message.channel.send(`${message.author}, congratulations!`);
+			message.channel.send(`${message.author}, congratulations!`);
 			break;
 		case 'Double Lose':
-				 message.channel.send(`${message.author}, you are such a disgrace!`);
+			message.channel.send(`${message.author}, you are such a disgrace!`);
 			break;
 		case 'ERROR':
-			const err = message.channel.send(`${message.author}, there was an error!`);
-					 err.react('🐞');
+
 			break;
 
 		}
@@ -168,7 +211,7 @@ client.on('message', async message => {
 	try {
 		command.execute(message, args, prefix, me);
 	}
-		 catch (error) {
+	catch (error) {
 		console.error(error);
 		message.reply('there was an error trying to execute that command!');
 		message.channel.send('```' + error + '```');

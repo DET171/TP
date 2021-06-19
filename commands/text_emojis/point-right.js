@@ -2,9 +2,9 @@ module.exports = {
 	name: 'pr',
 	description: 'Ping!',
 	args: false,
-	execute(message, args) {
+	execute(message) {
 		message.delete();
 		message.channel.send(message.author.username + ' sent \n(☞ﾟヮﾟ)☞')
-  		.then(msg => console.log(`${message.author.username} sent pr`));
+			.then(console.log(`${message.author.username} sent pr`));
 	},
 };
