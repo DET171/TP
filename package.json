@@ -1,6 +1,7 @@
 {
   "devDependencies": {
-    "discord.js": "12.5.3"
+    "discord.js": "12.5.3",
+    "eslint": "^7.29.0"
   },
   "dependencies": {
     "discord-bj": "^2.0.7",

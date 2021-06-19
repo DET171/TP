@@ -1,28 +1,16 @@
 require('events').EventEmitter.defaultMaxListeners = 15;
 const fs = require('fs');
-const Discord = require("discord.js");
+const Discord = require('discord.js');
 require('dotenv').config();
 const client = new Discord.Client();
-const https = require('https');
-const Enmap = require('enmap');
-const got = require('got');
-const DIG = require('discord-image-generation');
-const ms = require('ms');
 const db = require('quick.db');
-
-
-
-
-
-
+const prefix = "sus ";
 
 client.commands = new Discord.Collection();
 client.cooldowns = new Discord.Collection();
 
 
-
-
-console.log("Loading command files...")
+console.log('Loading command files...');
 const commandFolders = fs.readdirSync('./commands');
 
 for (const folder of commandFolders) {
@@ -37,182 +25,106 @@ for (const folder of commandFolders) {
 
 
 
+client.on('ready', async () => {
+	console.log('Logged in as ' + client.user.tag);
+	const express = require('express');
+	const channel = await client.channels.fetch('855271120567926814');
+	channel.send('Started up.');
+	setInterval (function () {
+		channel.send('I\'m up!')
+			.catch(console.error);
+	}, 270000);
+	const app = express();
+	const Pport = 8000;
 
+	app.get('/', (req, res) => res.send(`Serving as ${client.user.tag} <br> You can invite me at <a href="https://discord.com/api/oauth2/authorize?client_id=853206803219480606&permissions=4294967287&scope=bot">https://discord.com/api/oauth2/authorize?client_id=853206803219480606&permissions=4294967287&scope=bot<a><br>You can invite my brother at <a href="https://discord.com/oauth2/authorize?client_id=848166639367094302&permissions=4294967287&scope=bot%20applications.commands">https://discord.com/oauth2/authorize?client_id=848166639367094302&permissions=4294967287&scope=bot%20applications.commands</a>`));
 
-
-
-// I attach settings to client to allow for modular bot setups
-// In this example we'll leverage fetchAll:false and autoFetch:true for
-// best efficiency in memory usage. We also have to use cloneLevel:'deep'
-// to avoid our values to be "reference" to the default settings.
-// The explanation for why is complex - just go with it.
-client.settings = new Enmap({
-  name: "conf",
-  fetchAll: false,
-  autoFetch: true,
-  cloneLevel: 'deep'
-});
-
-const defaultConf = {
-	ownerRole: "Not Set",
-	coownerRole: "Not Set",
-	adminRole: "Administrator",
-	modRole: "Moderator",
-  adminRole: "Administrator",
-	prefix: "sus ",
-}
-
-client.on("ready", async () => {
-  console.log("Logged in as " + client.user.tag);
-  const express = require('express');
-  const channel = await client.channels.fetch('855271120567926814');
-	channel.send('Started up.')
-  setInterval (function () {
-    channel.send("I'm up!")
-    .catch(console.error);
-  }, 270000);
-  const app = express();
-  const Pport = 8000;
-
-  app.get('/', (req, res) => res.send(`Serving as ${client.user.tag} <br> You can invite me at <a href="https://discord.com/api/oauth2/authorize?client_id=853206803219480606&permissions=4294967287&scope=bot">https://discord.com/api/oauth2/authorize?client_id=853206803219480606&permissions=4294967287&scope=bot<a><br>You can invite my brother at <a href="https://discord.com/oauth2/authorize?client_id=848166639367094302&permissions=4294967287&scope=bot%20applications.commands">https://discord.com/oauth2/authorize?client_id=848166639367094302&permissions=4294967287&scope=bot%20applications.commands</a>`));
-
-  app.listen(Pport, () => console.log(`Example app listening at http://localhost:${Pport}`));
-    client.user.setActivity('YOU', { type: 'WATCHING' })
+	app.listen(Pport, () => console.log(`Example app listening at http://localhost:${Pport}`));
+	client.user.setActivity('SUS HELP', { type: 'PLAYING' });
 });
 
 
-client.on("guildDelete", guild => {
-  client.settings.delete(guild.id);
+client.on('guildDelete', guild => {
+	client.settings.delete(guild.id);
 });
 
 
 client.on('messageDelete', (message) => {
 	db.set(`snipe_${message.channel.id}`, {
 		content: message.content,
-		author: message.author
-	})
-})
+		author: message.author,
+	});
+});
 
 
-
-
-
-
-
-
-
-client.on("message", async message => {
-  // Exit and stop if it's not there
+client.on('message', async message => {
+	// Exit and stop if it's not there
 
 	console.log(`\nCHATLOGS - [${message.guild}] ${message.author.tag}: ${message.content}`);
 
-	if (!message.guild) return;
-	const guildConf = client.settings.ensure(message.guild.id, defaultConf);
-	let prefix = guildConf.prefix;
-
-
-  if (db.has(message.author.id + '.afk')) {
-    message.channel.send(`Welcome back ${message.author} I removed your AFK.`);
-    db.delete(message.author.id + '.afk');
-    db.delete(message.author.id + '.messageafk');
-  }
 
 
 
-  message.mentions.users.forEach((user) => {
-    if (message.author.bot) return false;
+	if (db.has(message.author.id + '.afk')) {
+		message.channel.send(`Welcome back ${message.author} I removed your AFK.`);
+		db.delete(message.author.id + '.afk');
+		db.delete(message.author.id + '.messageafk');
+	}
 
-    if (
-     message.content.includes('@here') ||
+
+	message.mentions.users.forEach((user) => {
+		if (message.author.bot) return false;
+
+		if (
+			message.content.includes('@here') ||
      message.content.includes('@everyone')
-    )
-     return false;
-    if (db.has(user.id + '.afk'))
-     message.channel.send(
-      `${message.author}, the user you mentioned is currently AFK.. Leave a message if urgent by DMing him`
-     );
-   });
+		) {return false;}
+		if (db.has(user.id + '.afk')) {
+			message.channel.send(
+				`${message.author}, the user you mentioned is currently AFK... Leave a message if urgent by DMing him`,
+			);
+		}
+	});
 
 
 
 
 
-
-  if (message.content.startsWith("set")) {
-    let configProps = Object.keys(guildConf).map(prop => {
-      return `${prop}  :  ${guildConf[prop]}\n`;
-    });
-    message.channel.send(`The following are the server's current configuration: \n
-    ${configProps}`);
-  }
-
-
-  if (!message.content.startsWith(prefix) || message.author.bot) return;
-  const args = message.content.slice(prefix.length).trim().split(/ +/);
-  const commandName = args.shift().toLowerCase();
+	if (!message.content.startsWith(prefix) || message.author.bot) return;
+	const args = message.content.slice(prefix.length).trim().split(/ +/);
+	const commandName = args.shift().toLowerCase();
 
 
 
 
-if(commandName === "setconf") {
 
-	if(!message.member.hasPermission('MANAGE_SERVER')) {
-		return message.reply("You do not have `Manage Server` permissions, sorry!");
+	if(commandName === 'bj' || commandName === 'blackjack') {
+		const blackjack = require('discord-bj');
+
+		const game = blackjack(message, client);
+		switch (game.result) {
+		case 'Win':
+			// do win stuff here
+			break;
+		case 'Tie':
+			// do tie stuff here
+			break;
+		case 'Lose':
+			// do lose stuff here
+			break;
+		case 'Double Win':
+				 message.channel.send(`${message.author}, congratulations!`);
+			break;
+		case 'Double Lose':
+				 message.channel.send(`${message.author}, you are such a disgrace!`);
+			break;
+		case 'ERROR':
+			const err = message.channel.send(`${message.author}, there was an error!`);
+					 err.react('🐞');
+			break;
+
+		}
 	}
-	const [prop, ...value] = args;
-	if(!client.settings.has(message.guild.id, prop)) {
-		return message.reply("This key is not in the configuration.");
-	}
-	client.settings.set(message.guild.id, value.join(" "), prop);
-	message.channel.send(`Guild configuration item ${prop} has been changed to:\n\`${value.join(" ")}\``);
-
-}
-
-
-
-
-
-  // Now let's make another command that shows the configuration items.
-  if(commandName === "showconf") {
-    let configProps = Object.keys(guildConf).map(prop => {
-      return `${prop}  :  ${guildConf[prop]}\n`;
-    });
-    message.channel.send(`The following are the server's current configuration:
-    \`\`\`${configProps}\`\`\``);
-  }
-
-
-	if(commandName === 'bj' || commandName === 'blackjack'){
-		const blackjack = require('discord-bj')
-
-		let game = blackjack(message, client)
-       switch (game.result) {
-         case 'Win':
-           // do win stuff here
-           break;
-         case 'Tie':
-           // do tie stuff here
-           break;
-         case 'Lose':
-           // do lose stuff here
-           break;
-         case 'Double Win':
-				 message.channel.send(`${message.author}, congratulations!`)
-           break;
-         case 'Double Lose':
-				 message.channel.send(`${message.author}, you are such a disgrace!`)
-           break;
-         case 'ERROR':
-           const err = message.channel.send(`${message.author}, there was an error!`)
-					 err.react('🐞')
-           break;
-
-       }
-	}
-
-
-
-
 
 
 	const command = client.commands.get(commandName) || client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName));
@@ -223,11 +135,11 @@ if(commandName === "setconf") {
 		if (command.usage) {
 			reply += '\nThe proper usage would be: `' + prefix + command.name + ' ' + command.usage + '`';
 		}
-	return message.channel.send(reply);
+		return message.channel.send(reply);
 	}
 
 
-  const me = client.user.tag;
+	const me = client.user.tag;
 
 	const { cooldowns } = client;
 
@@ -253,12 +165,9 @@ if(commandName === "setconf") {
 	setTimeout(() => timestamps.delete(message.author.id), cooldownAmount);
 
 
-
-
-
 	try {
 		command.execute(message, args, prefix, me);
-    }
+	}
 		 catch (error) {
 		console.error(error);
 		message.reply('there was an error trying to execute that command!');
@@ -266,8 +175,6 @@ if(commandName === "setconf") {
 	}
 
 });
-
-
 
 
 client.login();
