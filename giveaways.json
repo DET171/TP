@@ -1,1 +1,134 @@
-[{"messageID":"854270416754311168","channelID":"852164079123955742","guildID":"852141536694239273","startAt":1623744348063,"endAt":1623744361401,"ended":true,"winnerCount":1,"prize":"1","messages":{"giveaway":"\n🎉🎉 **GIVEAWAY TIME** 🎉🎉","giveawayEnded":"\n🎉🎉 **GIVEAWAY ENDED** 🎉🎉","inviteToParticipate":"React with 🎉 to participate!","timeRemaining":"Time remaining: **{duration}**","winMessage":"Congratulations, {winners}! You won **{prize}**!\n{messageURL}","embedFooter":"Powered by the discord-giveaways package","noWinner":"Giveaway cancelled, no valid participations.","winners":"winner(s)","endedAt":"Ended at","hostedBy":"Hosted by: {user}","units":{"seconds":"seconds","minutes":"minutes","hours":"hours","days":"days","pluralS":false}},"hostedBy":null,"exemptPermissions":[],"bonusEntries":"[]","winnerIDs":[]},{"messageID":"854270679993286676","channelID":"852164079123955742","guildID":"852141536694239273","startAt":1623744410845,"endAt":1623744423121,"ended":true,"winnerCount":1,"prize":"testing ho","messages":{"giveaway":"\n🎉🎉 **GIVEAWAY TIME** 🎉🎉","giveawayEnded":"\n🎉🎉 **GIVEAWAY ENDED** 🎉🎉","inviteToParticipate":"React with 🎉 to participate!","timeRemaining":"Time remaining: **{duration}**","winMessage":"Congratulations, {winners}! You won **{prize}**!\n{messageURL}","embedFooter":"Powered by the discord-giveaways package","noWinner":"Giveaway cancelled, no valid participations.","winners":"winner(s)","endedAt":"Ended at","hostedBy":"Hosted by: {user}","units":{"seconds":"seconds","minutes":"minutes","hours":"hours","days":"days","pluralS":false}},"hostedBy":null,"exemptPermissions":[],"bonusEntries":"[]","winnerIDs":[]},{"messageID":"854270923405525012","channelID":"852164079123955742","guildID":"852141536694239273","startAt":1623744468826,"endAt":1623744481672,"ended":true,"winnerCount":20,"prize":"te hg f","messages":{"giveaway":"\n🎉🎉 **GIVEAWAY TIME** 🎉🎉","giveawayEnded":"\n🎉🎉 **GIVEAWAY ENDED** 🎉🎉","inviteToParticipate":"React with 🎉 to participate!","timeRemaining":"Time remaining: **{duration}**","winMessage":"Congratulations, {winners}! You won **{prize}**!\n{messageURL}","embedFooter":"Powered by the discord-giveaways package","noWinner":"Giveaway cancelled, no valid participations.","winners":"winner(s)","endedAt":"Ended at","hostedBy":"Hosted by: {user}","units":{"seconds":"seconds","minutes":"minutes","hours":"hours","days":"days","pluralS":false}},"hostedBy":null,"exemptPermissions":[],"bonusEntries":"[]","winnerIDs":[]},{"messageID":"854272132477747210","channelID":"852164079123955742","guildID":"852141536694239273","startAt":1623744757130,"endAt":1623744769952,"ended":true,"winnerCount":2,"prize":"$10 nitro","messages":{"giveaway":"\n🎉🎉 **GIVEAWAY TIME** 🎉🎉","giveawayEnded":"\n🎉🎉 **GIVEAWAY ENDED** 🎉🎉","inviteToParticipate":"React with 🎉 to participate!","timeRemaining":"Time remaining: **{duration}**","winMessage":"Congratulations, {winners}! You won **{prize}**!\n{messageURL}","embedFooter":"Powered by the discord-giveaways package","noWinner":"Giveaway cancelled, no valid participations.","winners":"winner(s)","endedAt":"Ended at","hostedBy":"Hosted by: {user}","units":{"seconds":"seconds","minutes":"minutes","hours":"hours","days":"days","pluralS":false}},"hostedBy":null,"exemptPermissions":[],"bonusEntries":"[]","winnerIDs":[]}]
+[
+  {
+    "messageID": "854270416754311168",
+    "channelID": "852164079123955742",
+    "guildID": "852141536694239273",
+    "startAt": 1623744348063,
+    "endAt": 1623744361401,
+    "ended": true,
+    "winnerCount": 1,
+    "prize": "1",
+    "messages": {
+      "giveaway": "\n🎉🎉 **GIVEAWAY TIME** 🎉🎉",
+      "giveawayEnded": "\n🎉🎉 **GIVEAWAY ENDED** 🎉🎉",
+      "inviteToParticipate": "React with 🎉 to participate!",
+      "timeRemaining": "Time remaining: **{duration}**",
+      "winMessage": "Congratulations, {winners}! You won **{prize}**!\n{messageURL}",
+      "embedFooter": "Powered by the discord-giveaways package",
+      "noWinner": "Giveaway cancelled, no valid participations.",
+      "winners": "winner(s)",
+      "endedAt": "Ended at",
+      "hostedBy": "Hosted by: {user}",
+      "units": {
+        "seconds": "seconds",
+        "minutes": "minutes",
+        "hours": "hours",
+        "days": "days",
+        "pluralS": false
+      }
+    },
+    "hostedBy": null,
+    "exemptPermissions": [],
+    "bonusEntries": "[]",
+    "winnerIDs": []
+  },
+  {
+    "messageID": "854270679993286676",
+    "channelID": "852164079123955742",
+    "guildID": "852141536694239273",
+    "startAt": 1623744410845,
+    "endAt": 1623744423121,
+    "ended": true,
+    "winnerCount": 1,
+    "prize": "testing ho",
+    "messages": {
+      "giveaway": "\n🎉🎉 **GIVEAWAY TIME** 🎉🎉",
+      "giveawayEnded": "\n🎉🎉 **GIVEAWAY ENDED** 🎉🎉",
+      "inviteToParticipate": "React with 🎉 to participate!",
+      "timeRemaining": "Time remaining: **{duration}**",
+      "winMessage": "Congratulations, {winners}! You won **{prize}**!\n{messageURL}",
+      "embedFooter": "Powered by the discord-giveaways package",
+      "noWinner": "Giveaway cancelled, no valid participations.",
+      "winners": "winner(s)",
+      "endedAt": "Ended at",
+      "hostedBy": "Hosted by: {user}",
+      "units": {
+        "seconds": "seconds",
+        "minutes": "minutes",
+        "hours": "hours",
+        "days": "days",
+        "pluralS": false
+      }
+    },
+    "hostedBy": null,
+    "exemptPermissions": [],
+    "bonusEntries": "[]",
+    "winnerIDs": []
+  },
+  {
+    "messageID": "854270923405525012",
+    "channelID": "852164079123955742",
+    "guildID": "852141536694239273",
+    "startAt": 1623744468826,
+    "endAt": 1623744481672,
+    "ended": true,
+    "winnerCount": 20,
+    "prize": "te hg f",
+    "messages": {
+      "giveaway": "\n🎉🎉 **GIVEAWAY TIME** 🎉🎉",
+      "giveawayEnded": "\n🎉🎉 **GIVEAWAY ENDED** 🎉🎉",
+      "inviteToParticipate": "React with 🎉 to participate!",
+      "timeRemaining": "Time remaining: **{duration}**",
+      "winMessage": "Congratulations, {winners}! You won **{prize}**!\n{messageURL}",
+      "embedFooter": "Powered by the discord-giveaways package",
+      "noWinner": "Giveaway cancelled, no valid participations.",
+      "winners": "winner(s)",
+      "endedAt": "Ended at",
+      "hostedBy": "Hosted by: {user}",
+      "units": {
+        "seconds": "seconds",
+        "minutes": "minutes",
+        "hours": "hours",
+        "days": "days",
+        "pluralS": false
+      }
+    },
+    "hostedBy": null,
+    "exemptPermissions": [],
+    "bonusEntries": "[]",
+    "winnerIDs": []
+  },
+  {
+    "messageID": "854272132477747210",
+    "channelID": "852164079123955742",
+    "guildID": "852141536694239273",
+    "startAt": 1623744757130,
+    "endAt": 1623744769952,
+    "ended": true,
+    "winnerCount": 2,
+    "prize": "$10 nitro",
+    "messages": {
+      "giveaway": "\n🎉🎉 **GIVEAWAY TIME** 🎉🎉",
+      "giveawayEnded": "\n🎉🎉 **GIVEAWAY ENDED** 🎉🎉",
+      "inviteToParticipate": "React with 🎉 to participate!",
+      "timeRemaining": "Time remaining: **{duration}**",
+      "winMessage": "Congratulations, {winners}! You won **{prize}**!\n{messageURL}",
+      "embedFooter": "Powered by the discord-giveaways package",
+      "noWinner": "Giveaway cancelled, no valid participations.",
+      "winners": "winner(s)",
+      "endedAt": "Ended at",
+      "hostedBy": "Hosted by: {user}",
+      "units": {
+        "seconds": "seconds",
+        "minutes": "minutes",
+        "hours": "hours",
+        "days": "days",
+        "pluralS": false
+      }
+    },
+    "hostedBy": null,
+    "exemptPermissions": [],
+    "bonusEntries": "[]",
+    "winnerIDs": []
+  }
+]

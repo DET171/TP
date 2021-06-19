@@ -11,12 +11,10 @@ module.exports = {
 		}
 
 		const embed = {
-			'title': 'Here is the winner! :coin:',
-			'description': doRandHT(),
-			'color': 'RANDOM',
+			title: 'Here is the winner! :coin:',
+			description: doRandHT(),
+			color: 'RANDOM',
 		};
 		message.channel.send({ embed });
-
-
 	},
 };

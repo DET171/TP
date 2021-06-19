@@ -3,9 +3,7 @@ module.exports = {
 	description: 'Ping!',
 	args: false,
 	execute(message) {
-		const quotes = [
-			'HAHAHAHA WIP',
-		];
+		const quotes = ['HAHAHAHA WIP'];
 		message.channel.send(quotes[Math.floor(Math.random() * quotes.length)]);
 	},
 };

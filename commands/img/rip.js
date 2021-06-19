@@ -5,7 +5,10 @@ module.exports = {
 	description: 'Ping!',
 	args: false,
 	async execute(message, args) {
-		const avatar = message.author.displayAvatarURL({ dynamic: false, format: 'png' });
+		const avatar = message.author.displayAvatarURL({
+			dynamic: false,
+			format: 'png',
+		});
 		// Make the image
 		const img = await new DIG.Rip().getImage(avatar);
 		// Add the image as an attachement

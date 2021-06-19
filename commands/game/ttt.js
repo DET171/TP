@@ -7,6 +7,5 @@ module.exports = {
 		const TicTacToe = require('discord-tictactoe');
 		const game = new TicTacToe({ language: 'en' });
 		game.handleMessage(message);
-
 	},
 };

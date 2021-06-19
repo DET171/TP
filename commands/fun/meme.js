@@ -9,7 +9,7 @@ module.exports = {
 	execute(message) {
 		const embed = new Discord.MessageEmbed();
 		got('https://www.reddit.com/r/memes/random/.json')
-			.then(response => {
+			.then((response) => {
 				const [list] = JSON.parse(response.body);
 				const [post] = list.data.children;
 

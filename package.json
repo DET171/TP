@@ -1,7 +1,9 @@
 {
   "devDependencies": {
     "discord.js": "12.5.3",
-    "eslint": "^7.29.0"
+    "eslint": "^7.29.0",
+    "eslint-config-prettier": "^8.3.0",
+    "prettier": "2.3.1"
   },
   "dependencies": {
     "discord-bj": "^2.0.7",
@@ -14,6 +16,7 @@
     "got": "^9.6.0",
     "moment": "^2.29.1",
     "ms": "^2.1.3",
+    "opentdb-api": "^1.0.0",
     "pm2": "^5.1.0",
     "quick.db": "^7.1.3",
     "request": "^2.88.2",

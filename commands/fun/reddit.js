@@ -11,7 +11,7 @@ module.exports = {
 		const link = 'https://www.reddit.com/r/' + args[0] + '/random/.json';
 		const embed = new Discord.MessageEmbed();
 		got(link)
-			.then(response => {
+			.then((response) => {
 				const [list] = JSON.parse(response.body);
 				const [post] = list.data.children;
 

@@ -6,15 +6,19 @@ module.exports = {
 	args: true,
 	usage: '<here/everyone/none/role_ID> <channel_ID> <announcement>',
 	async execute(message, args) {
-		if(!message.member.hasPermission('MANAGE_CHANNELS')) return message.channel.send('You must have `Manage Channel` permissions to use this command!');
+		if (!message.member.hasPermission('MANAGE_CHANNELS')) {
+			return message.channel.send(
+				'You must have `Manage Channel` permissions to use this command!',
+			);
+		}
 		const ann = args.slice(2).join(' ');
-		if(args[0] === 'here') {
+		if (args[0] === 'here') {
 			var ping = '@here';
 		}
-		else if(args[0] === 'everyone') {
+		else if (args[0] === 'everyone') {
 			var ping = '@everyone';
 		}
-		else if(args[0] === 'none') {
+		else if (args[0] === 'none') {
 			var ping = '';
 		}
 		else {
