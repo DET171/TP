@@ -7,3 +7,5 @@ data
 .env
 
 giveaways.json
+
+json.sqlite
