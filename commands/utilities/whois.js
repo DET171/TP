@@ -8,7 +8,9 @@ module.exports = {
 	execute(message, args) {
 		const embed = new Discord.MessageEmbed();
 		var user = message.mentions.members.first();
-		if (!args[0]) {return message.reply('Apologies! Please specify a particular member!');}
+		if (!args[0]) {
+			return message.reply('Apologies! Please specify a particular member!');
+		}
 		embed.setTitle('User Information');
 		embed.addField('Username', user.user.username);
 		embed.addField('User ID', user.id);

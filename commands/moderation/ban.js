@@ -13,10 +13,7 @@ module.exports = {
 					message.channel.send(
 						'Succesfully banned ' + victim + '\n Reason: ' + reason,
 					);
-					member.guild.channels.cache
-						.find('name', client.settings.get(member.guild.id, 'modLogChannel'))
-						.send('Banned ' + victim.tag + '\n Reason: ' + reason)
-						.catch(console.error);
+
 				}
 				catch {
 					message.channel.send('. ');

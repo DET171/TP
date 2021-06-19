@@ -13,13 +13,10 @@ module.exports = {
 					message.channel.send(
 						'Succesfully kicked ' + victim + '\n Reason: ' + reason,
 					);
-					member.guild.channels.cache
-						.find('name', client.settings.get(member.guild.id, 'modLogChannel'))
-						.send('Kicked ' + victim.tag + '\n Reason: ' + reason)
-						.catch(console.error);
+
 				}
 				catch {
-					message.reply('. ');
+					message.channel.send('.');
 				}
 			}
 			else {
