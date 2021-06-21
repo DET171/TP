@@ -153,7 +153,7 @@ client.on('message', async (message) => {
 		}
 		else {
 			const suggestchannel = await client.channels.fetch('856472269697187891');
-			suggestchannel.send(`<@${message.author.id}> of ${message.guild.name} (${message.guild.id}) suggested the following \n Reason: ${suggestion}`);
+			suggestchannel.send(`<@${message.author.id}> of ${message.guild.name} (${message.guild.id}) suggested the following: \n  ${suggestion}`);
 			message.channel.send('**Your bug was reported. If you abuse this feature you will be put on a blacklist and will be prevented from using this command.**');
 		}
 
