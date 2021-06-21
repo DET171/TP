@@ -134,10 +134,10 @@ client.on('message', async (message) => {
 
 	}
 	else if (commandName === 'reportuser') {
-		const user = message.mentions.members.first();
+		const user = message.mentions.members.first() || args[0];
 		const reason = args.slice(1).join(' ');
 		if (!reason) {
-			message.channel.send('You are attempting to report a user without tagging a user!');
+			message.channel.send('You are attempting to report a user without a reason!');
 		}
 		else {
 			const reportuser = await client.channels.fetch('856472285174956042');
