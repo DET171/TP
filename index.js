@@ -43,7 +43,7 @@ client.on('ready', async () => {
 	const express = require('express');
 	const channel = await client.channels.fetch('855271120567926814');
 	channel.send('Started up.');
-	setInterval(function () {
+	setInterval(function() {
 		channel.send('I\'m up!').catch(console.error);
 	}, 270000);
 	const app = express();
