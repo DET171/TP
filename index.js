@@ -5,6 +5,7 @@ require('dotenv').config();
 const client = new Discord.Client();
 const Enmap = require('enmap');
 const db = require('quick.db');
+const express = require('express');
 
 client.commands = new Discord.Collection();
 client.cooldowns = new Discord.Collection();
@@ -40,14 +41,13 @@ const defaultConf = {
 
 client.on('ready', async () => {
 	console.log('Logged in as ' + client.user.tag);
-	const express = require('express');
 	const channel = await client.channels.fetch('855271120567926814');
 	channel.send('Started up.');
 	setInterval(function() {
 		channel.send('I\'m up!').catch(console.error);
 	}, 270000);
 	const app = express();
-	const Pport = 8000;
+	const Pport = 3000;
 
 	app.get('/', (req, res) =>
 		res.send(
@@ -58,7 +58,7 @@ client.on('ready', async () => {
 	app.listen(Pport, () =>
 		console.log(`Example app listening at http://localhost:${Pport}`),
 	);
-	client.user.setActivity('SUS HELP', { type: 'PLAYING' });
+	client.user.setActivity('sus help', { type: 'PLAYING' });
 });
 
 client.on('guildDelete', (guild) => {
@@ -118,7 +118,49 @@ client.on('message', async (message) => {
 	const args = message.content.slice(prefix.length).trim().split(/ +/);
 	const commandName = args.shift().toLowerCase();
 
-	if (commandName === 'setconf') {
+	if (commandName === 'reportbug') {
+
+
+		const bug = args.slice(0).join(' ');
+
+		if (!bug) {
+			message.channel.send('You are attempting to send a bug report without listing a bug!');
+		}
+		else {
+			const bugchannel = await client.channels.fetch('856472254564663316');
+			bugchannel.send(`<@${message.author.id}> of ${message.guild.name} (${message.guild.id}) reported the following bug: \n ${bug}`);
+			message.channel.send('**Your bug was reported. If you abuse this feature you will be put on a blacklist and will be prevented from using this command.**');
+		}
+
+	}
+	else if (commandName === 'reportuser') {
+		const user = message.mentions.members.first();
+		const reason = args.slice(1).join(' ');
+		if (!reason) {
+			message.channel.send('You are attempting to report a user without tagging a user!');
+		}
+		else {
+			const reportuser = await client.channels.fetch('856472285174956042');
+			reportuser.send(`<@${message.author.id}> of ${message.guild.name} (${message.guild.id}) reported ${user} \n Reason: ${reason}`);
+			message.channel.send('**Your bug was reported. If you abuse this feature you will be put on a blacklist and will be prevented from using this command.**');
+		}
+
+	}
+	else if (commandName === 'botsuggest') {
+		const suggestion = args.slice(0).join(' ');
+		if (!suggestion) {
+			message.channel.send('You are attempting to send an empty suggestion!');
+		}
+		else {
+			const suggestchannel = await client.channels.fetch('856472269697187891');
+			suggestchannel.send(`<@${message.author.id}> of ${message.guild.name} (${message.guild.id}) suggested the following \n Reason: ${suggestion}`);
+			message.channel.send('**Your bug was reported. If you abuse this feature you will be put on a blacklist and will be prevented from using this command.**');
+		}
+
+	}
+
+
+	else if (commandName === 'setconf') {
 		if (!message.member.hasPermission('MANAGE_SERVER')) {
 			return message.reply(
 				'You do not have `Manage Server` permissions, sorry!',
@@ -137,7 +179,7 @@ client.on('message', async (message) => {
 	}
 
 	// Now let's make another command that shows the configuration items.
-	if (commandName === 'showconf') {
+	else if (commandName === 'showconf') {
 		const configProps = Object.keys(guildConf).map((prop) => {
 			return `${prop}  :  ${guildConf[prop]}\n`;
 		});
@@ -145,7 +187,7 @@ client.on('message', async (message) => {
     \`\`\`${configProps}\`\`\``);
 	}
 
-	if (commandName === 'bj' || commandName === 'blackjack') {
+	else if (commandName === 'bj' || commandName === 'blackjack') {
 		const blackjack = require('discord-bj');
 
 		const game = blackjack(message, client);
@@ -232,3 +274,17 @@ client.on('message', async (message) => {
 });
 
 client.login();
+
+
+const app = express();
+const Sport = 8000;
+
+app.get('/', (req, res) =>
+	res.send(
+		`Hey I'm here! <br> Port: ${Sport}`,
+	),
+);
+
+app.listen(Sport, () =>
+	console.log(`Example app listening at http://localhost:${Sport}`),
+);
