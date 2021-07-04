@@ -6,19 +6,20 @@ const client = new Discord.Client();
 const Enmap = require('enmap');
 const db = require('quick.db');
 const express = require('express');
+const path = require('path');
 
 client.commands = new Discord.Collection();
 client.cooldowns = new Discord.Collection();
 
 console.log('Loading command files...');
-const commandFolders = fs.readdirSync('./commands');
+const commandFolders = fs.readdirSync(path.join(__dirname, './commands'));
 
 for (const folder of commandFolders) {
 	const commandFiles = fs
-		.readdirSync(`./commands/${folder}`)
+		.readdirSync(path.join(__dirname, `./commands/${folder}`))
 		.filter((file) => file.endsWith('.js'));
 	for (const file of commandFiles) {
-		const command = require(`./commands/${folder}/${file}`);
+		const command = require(path.join(__dirname, `./commands/${folder}/${file}`));
 		client.commands.set(command.name, command);
 		console.log(command.name);
 	}
@@ -51,7 +52,7 @@ client.on('ready', async () => {
 
 	app.get('/', (req, res) =>
 		res.send(
-			`Serving as ${client.user.tag} <br> You can invite me at <a href="https://discord.com/api/oauth2/authorize?client_id=853206803219480606&permissions=4294967287&scope=bot">https://discord.com/api/oauth2/authorize?client_id=853206803219480606&permissions=4294967287&scope=bot<a><br>You can invite my brother at <a href="https://discord.com/oauth2/authorize?client_id=848166639367094302&permissions=4294967287&scope=bot%20applications.commands">https://discord.com/oauth2/authorize?client_id=848166639367094302&permissions=4294967287&scope=bot%20applications.commands</a>`,
+			`Serving as ${client.user.tag} <br> You can invite me at <a href="https://discord.com/api/oauth2/authorize?client_id=${client.user.id}&permissions=4294967287&scope=bot">https://discord.com/api/oauth2/authorize?client_id=853206803219480606&permissions=4294967287&scope=bot<a><br>You can invite my brother at <a href="https://discord.com/oauth2/authorize?client_id=848166639367094302&permissions=4294967287&scope=bot%20applications.commands">https://discord.com/oauth2/authorize?client_id=848166639367094302&permissions=4294967287&scope=bot%20applications.commands</a>`,
 		),
 	);
 
@@ -74,10 +75,6 @@ client.on('messageDelete', (message) => {
 
 client.on('message', async (message) => {
 	// Exit and stop if it's not there
-
-	console.log(
-		`\nCHATLOGS - [${message.guild}] ${message.author.tag}: ${message.content}`,
-	);
 
 	if (!message.guild) return;
 	const guildConf = client.settings.ensure(message.guild.id, defaultConf);
