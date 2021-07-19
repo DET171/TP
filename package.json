@@ -5,7 +5,7 @@
     "discord-minigames": "^1.2.2",
     "discord-tictactoe": "^2.1.1",
     "dotenv": "^10.0.0",
-    "enmap": "5.8.6",
+    "enmap": "5.8.7",
     "eslint": "^7.31.0",
     "express": "^4.17.1",
     "fs": "^0.0.1-security",
